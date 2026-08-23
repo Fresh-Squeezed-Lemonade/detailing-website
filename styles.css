@@ -1,5 +1,5 @@
 /* =========================================================
-   Jordan Clark's Pressure Washing — styles.css
+   Jordan Clark's Car Detailing — styles.css
    Palette: navy #0D1B2A | water-blue #00B4D8 | white #F8FAFC
             slate #64748B | amber #F59E0B
    Type: Oswald (display) + Inter (body)
@@ -111,8 +111,8 @@ body {
 
 /* Dark ghost — for use on light backgrounds */
 .btn--ghost-dark {
-  background: transparent;
-  color: var(--navy);
+  background: var(--navy-mid);
+  color: var(--slate-light);
   border-color: var(--navy-light);
 }
 .btn--ghost-dark:hover {
@@ -342,9 +342,44 @@ body {
   gap: 1.5rem;
 }
 
-.services__grid--two {
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 780px;
+.services__grid--three {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Pet hair add-on banner */
+.addon-banner {
+  margin-top: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--navy);
+  border: 1px solid rgba(0,180,216,0.25);
+  border-left: 4px solid var(--amber);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+}
+
+.addon-banner__icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.addon-banner strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--amber);
+  margin-bottom: 0.3rem;
+}
+
+.addon-banner p {
+  font-size: 0.9rem;
+  color: var(--slate-light);
+  line-height: 1.6;
 }
 
 .service-card {
@@ -414,9 +449,12 @@ body {
 
 .pricing__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  max-width: 780px;
+}
+
+.pricing__grid--three {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .pricing-card {
@@ -452,8 +490,6 @@ body {
   border-radius: 100px;
   white-space: nowrap;
 }
-
-.pricing-card__header {}
 
 .pricing-card__name {
   font-family: var(--font-display);
@@ -526,11 +562,89 @@ body {
   font-weight: 600;
 }
 
-.pricing__note {
-  margin-top: 1.75rem;
-  font-size: 0.85rem;
+/* Single flat-rate price display */
+.pricing-tier--single {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+
+.pricing-tier--single .pricing-tier__price {
+  font-size: 2.2rem;
+}
+
+.pricing-tier--single .pricing-tier__label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--slate);
-  max-width: 60ch;
+}
+
+/* Add-ons row below pricing grid */
+.pricing__addons {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pricing-addon {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--navy-mid);
+  border: 1px solid var(--amber);
+  border-radius: var(--radius);
+  padding: 0.6rem 1.1rem;
+}
+
+.pricing-addon__label {
+  font-size: 0.9rem;
+  color: var(--slate-light);
+  font-weight: 500;
+}
+
+.pricing-addon__price {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--amber);
+}
+
+.pricing__note {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--slate-light);
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  max-width: 65ch;
+}
+
+/* Booking notice (multi-car warning) */
+.booking__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--slate-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.booking__notice-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.booking__notice strong {
+  color: var(--amber);
 }
 
 /* ── BEFORE & AFTER GALLERY ──────────────────────────────── */
@@ -676,6 +790,101 @@ body {
   text-decoration: underline;
 }
 
+/* ── LIGHTBOX ────────────────────────────────────────────── */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(5, 10, 18, 0.93);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+}
+
+#lightbox.active {
+  display: flex;
+}
+
+.lightbox__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: min(90vw, 1000px);
+  max-height: 90svh;
+  padding: 1rem;
+}
+
+.lightbox__img {
+  max-width: 100%;
+  max-height: 80svh;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  transition: opacity 150ms ease;
+}
+
+.lightbox__img--fade {
+  opacity: 0;
+}
+
+.lightbox__caption {
+  font-size: 0.85rem;
+  color: var(--slate-light);
+  text-align: center;
+  max-width: 60ch;
+}
+
+.lightbox__close {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  font-size: 1.75rem;
+  line-height: 1;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+.lightbox__close:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.lightbox__prev,
+.lightbox__next {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  font-size: 2rem;
+  line-height: 1;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+.lightbox__prev { left: 1rem; }
+.lightbox__next { right: 1rem; }
+.lightbox__prev:hover,
+.lightbox__next:hover {
+  background: rgba(255,255,255,0.2);
+}
+
 /* ── FOOTER ──────────────────────────────────────────────── */
 .footer {
   background: #080f17;
@@ -726,6 +935,13 @@ body {
 }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .services__grid--three,
+  .pricing__grid--three {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 900px) {
   .gallery__grid {
     grid-template-columns: 1fr;
@@ -757,8 +973,9 @@ body {
 
   .hero__ctas { flex-direction: column; }
 
-  .services__grid--two,
-  .pricing__grid {
+  .services__grid--three,
+  .pricing__grid,
+  .pricing__grid--three {
     grid-template-columns: 1fr;
   }
 
