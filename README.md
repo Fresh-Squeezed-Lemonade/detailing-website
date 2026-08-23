@@ -1,7 +1,5 @@
 # Jordan Clark's Pressure Washing — Website
 
-A single-page website for Jordan Clark's car pressure washing business. No frameworks, no build step — just HTML, CSS, and vanilla JavaScript.
-
 ---
 
 ## File Structure
@@ -81,9 +79,3 @@ This site is fully static — drop all files (including the `images/` folder) an
 | **Traditional host** | FTP/SFTP everything to your `public_html` directory |
 
 Make sure the `images/` folder goes up alongside `index.html` — not inside a subfolder.
-
----
-
-## Updating Prices
-
-Prices live in two places in `index.html`: the **Services** section (descriptions) and the **Pricing** section (the actual dollar amounts). Search for `$20`, `$25`, `$30`, `$40` to find and update them quickly.
