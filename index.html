@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jordan Clark's Car Detailing | Professional Auto Detailing</title>
-  <meta name="description" content="Professional car detailing by Jordan Clark. Exterior, interior, and full detail packages. I come to you. Book online today." />
+  <meta name="description" content="Jordan Clark's car detailing services. Exterior, interior, and full detail packages. I come to you. Book online today." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -22,10 +22,9 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav__links" id="navLinks">
-        <li><a href="#services">Services</a></li>
-        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#services">Services & Pricing</a></li>
         <li><a href="#gallery">Results</a></li>
-        <li><a href="#booking" class="btn btn--nav">Book Now</a></li>
+        <li class="nav__book"><a href="#booking" class="btn btn--nav">Book Now</a></li>
       </ul>
     </div>
   </nav>
@@ -34,7 +33,7 @@
   <header class="hero" id="home">
     <div class="hero__bg-grid" aria-hidden="true"></div>
     <div class="container hero__content">
-      <p class="hero__eyebrow">Car Detailing</p>
+      <p class="hero__eyebrow">Professional Car Detailing</p>
       <h1 class="hero__headline">
         We Make Things<br />
         <span class="hero__blast">CLEAN.</span>
@@ -45,7 +44,7 @@
       </p>
       <div class="hero__ctas">
         <a href="#booking" class="btn btn--primary">Book a Detail</a>
-        <a href="#pricing" class="btn btn--ghost">See Pricing</a>
+        <a href="#services" class="btn btn--ghost">See Services & Pricing</a>
       </div>
     </div>
     <div class="hero__scroll-hint" aria-hidden="true">
@@ -53,18 +52,18 @@
     </div>
   </header>
 
-  <!-- SERVICES -->
+  <!-- SERVICES & PRICING -->
   <section class="services" id="services">
     <div class="container">
       <div class="section-header">
         <p class="section-eyebrow">What I Offer</p>
-        <h2 class="section-title">Services</h2>
+        <h2 class="section-title">Services &amp; Pricing</h2>
       </div>
       <div class="services__grid services__grid--three">
 
         <article class="service-card">
-          <div class="service-card__icon">🚿</div>
           <h3 class="service-card__title">Exterior Detail</h3>
+          <div class="service-card__price">$50 <span>flat rate</span></div>
           <p class="service-card__desc">A thorough detail of the full exterior — body panels, wheels, and tires. I come to you; just have a garden hose and an electrical outlet available.</p>
           <ul class="service-card__list">
             <li>Full exterior detail</li>
@@ -74,8 +73,8 @@
         </article>
 
         <article class="service-card">
-          <div class="service-card__icon">🪑</div>
           <h3 class="service-card__title">Interior Detail</h3>
+          <div class="service-card__price">$100 <span>flat rate</span></div>
           <p class="service-card__desc">A deep clean of the full interior — vacuuming, wiping down every surface, and clearing out built-up grime. I come to you; just have an electrical outlet available.</p>
           <ul class="service-card__list">
             <li>Full interior vacuum</li>
@@ -84,103 +83,30 @@
           </ul>
         </article>
 
-        <article class="service-card">
-          <div class="service-card__icon">✨</div>
+        <article class="service-card service-card--featured">
+          <div class="service-card__badge">Best Value</div>
           <h3 class="service-card__title">Full Detail</h3>
+          <div class="service-card__price">$130 <span>flat rate</span></div>
           <p class="service-card__desc">The complete package — everything inside and out. Best value if your car needs a proper reset. I come to you; just have a garden hose and an electrical outlet available.</p>
           <ul class="service-card__list">
             <li>Everything in Exterior</li>
             <li>Everything in Interior</li>
-            <li>Best value combo</li>
+            <li>Save $20 vs. booking separately</li>
           </ul>
         </article>
 
       </div>
 
+      <div class="service-card__actions">
+        <a href="#booking" class="btn btn--ghost-dark">Book Exterior</a>
+        <a href="#booking" class="btn btn--ghost-dark">Book Interior</a>
+        <a href="#booking" class="btn btn--primary">Book Full Detail</a>
+      </div>
+
       <div class="addon-banner">
-        <span class="addon-banner__icon">🐾</span>
         <div>
           <strong>Pet Hair Add-on — +$50</strong>
           <p>Pet hair requires extra time and specialized tools to remove properly. If your car has pet hair, add $50 to any service when booking.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section class="pricing" id="pricing">
-    <div class="container">
-      <div class="section-header">
-        <p class="section-eyebrow">Simple Pricing</p>
-        <h2 class="section-title">No Surprises</h2>
-      </div>
-      <div class="pricing__grid pricing__grid--three">
-
-        <div class="pricing-card">
-          <div class="pricing-card__header">
-            <h3 class="pricing-card__name">Exterior</h3>
-            <p class="pricing-card__sub">Outside only</p>
-          </div>
-          <div class="pricing-card__tiers">
-            <div class="pricing-tier pricing-tier--single">
-              <span class="pricing-tier__price">$50</span>
-              <span class="pricing-tier__label">flat rate</span>
-            </div>
-          </div>
-          <ul class="pricing-card__features">
-            <li>Full exterior detail</li>
-            <li>Wheels &amp; tires</li>
-            <li>Rinse &amp; dry</li>
-          </ul>
-          <a href="#booking" class="btn btn--ghost-dark">Book Exterior</a>
-        </div>
-
-        <div class="pricing-card">
-          <div class="pricing-card__header">
-            <h3 class="pricing-card__name">Interior</h3>
-            <p class="pricing-card__sub">Inside only</p>
-          </div>
-          <div class="pricing-card__tiers">
-            <div class="pricing-tier pricing-tier--single">
-              <span class="pricing-tier__price">$100</span>
-              <span class="pricing-tier__label">flat rate</span>
-            </div>
-          </div>
-          <ul class="pricing-card__features">
-            <li>Full interior vacuum</li>
-            <li>Dashboard &amp; surface wipe-down</li>
-            <li>Door panels &amp; console</li>
-          </ul>
-          <a href="#booking" class="btn btn--ghost-dark">Book Interior</a>
-        </div>
-
-        <div class="pricing-card pricing-card--featured">
-          <div class="pricing-card__badge">Best Value</div>
-          <div class="pricing-card__header">
-            <h3 class="pricing-card__name">Full Detail</h3>
-            <p class="pricing-card__sub">Interior + Exterior</p>
-          </div>
-          <div class="pricing-card__tiers">
-            <div class="pricing-tier pricing-tier--single">
-              <span class="pricing-tier__price">$130</span>
-              <span class="pricing-tier__label">flat rate</span>
-            </div>
-          </div>
-          <ul class="pricing-card__features">
-            <li>Everything in Exterior</li>
-            <li>Everything in Interior</li>
-            <li>Save $20 vs. booking separately</li>
-          </ul>
-          <a href="#booking" class="btn btn--primary">Book Full Detail</a>
-        </div>
-
-      </div>
-
-      <div class="pricing__addons">
-        <div class="pricing-addon">
-          <span class="pricing-addon__label">🐾 Pet Hair Removal</span>
-          <span class="pricing-addon__price">+$50</span>
         </div>
       </div>
 
@@ -240,7 +166,6 @@
         </div>
 
       </div>
-
     </div>
   </section>
 
@@ -254,7 +179,6 @@
       </div>
 
       <div class="booking__notice">
-        <span class="booking__notice-icon">🚗</span>
         <p><strong>Multiple cars?</strong> Please book a separate appointment for each vehicle. Each car gets its own dedicated slot so nothing gets rushed.</p>
       </div>
 
@@ -285,8 +209,7 @@
       </a>
       <p class="footer__tagline">Professional Car Detailing · I Come to You</p>
       <nav class="footer__links" aria-label="Footer navigation">
-        <a href="#services">Services</a>
-        <a href="#pricing">Pricing</a>
+        <a href="#services">Services & Pricing</a>
         <a href="#gallery">Results</a>
         <a href="#booking">Book</a>
       </nav>
