@@ -24,6 +24,7 @@
       <ul class="nav__links" id="navLinks">
         <li><a href="#services">Services & Pricing</a></li>
         <li><a href="#gallery">Results</a></li>
+        <li><a href="#contact">Contact</a></li>
         <li class="nav__book"><a href="#booking" class="btn btn--nav">Book Now</a></li>
       </ul>
     </div>
@@ -169,6 +170,45 @@
     </div>
   </section>
 
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Get in Touch</p>
+        <h2 class="section-title">Send Me a Message</h2>
+        <p class="contact__desc">Have a question before booking? Send me a message and I'll get back to you.</p>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <div class="contact-form__row">
+          <div class="contact-form__group">
+            <label for="contactName">Your Name</label>
+            <input type="text" id="contactName" name="name" placeholder="John Smith" required />
+            <span class="contact-form__error" id="contactNameError"></span>
+          </div>
+          <div class="contact-form__group">
+            <label for="contactEmail">Your Email</label>
+            <input type="email" id="contactEmail" name="email" placeholder="john.smith@example.com" required />
+            <span class="contact-form__error" id="contactEmailError"></span>
+          </div>
+        </div>
+        <div class="contact-form__group">
+          <label for="contactSubject">Subject</label>
+          <input type="text" id="contactSubject" name="subject" placeholder="Question about…" required />
+          <span class="contact-form__error" id="contactSubjectError"></span>
+        </div>
+        <div class="contact-form__group">
+          <label for="contactMessage">Message</label>
+          <textarea id="contactMessage" name="message" rows="5" placeholder="Ask me anything…" required></textarea>
+          <span class="contact-form__error" id="contactMessageError"></span>
+        </div>
+        <button type="submit" class="btn btn--primary" id="contactSubmit">Send Message</button>
+        <div class="contact-form__success" id="contactSuccess" hidden>
+          ✓ Your email client should have opened with your message ready to send — just hit Send!
+        </div>
+      </form>
+    </div>
+  </section>
+
   <!-- BOOKING -->
   <section class="booking" id="booking">
     <div class="container">
@@ -211,6 +251,7 @@
       <nav class="footer__links" aria-label="Footer navigation">
         <a href="#services">Services & Pricing</a>
         <a href="#gallery">Results</a>
+        <a href="#contact">Contact</a>
         <a href="#booking">Book</a>
       </nav>
       <p class="footer__copy">&copy; <span id="year"></span> Jordan Clark's Car Detailing. All rights reserved.</p>

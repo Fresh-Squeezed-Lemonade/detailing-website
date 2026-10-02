@@ -511,6 +511,7 @@ body {
   border: 1px solid rgba(245,158,11,0.25);
   border-radius: var(--radius);
   padding: 0.75rem 1rem;
+  max-width: 65ch;
 }
 
 /* Booking notice (multi-car warning) */
@@ -633,6 +634,97 @@ body {
   border-radius: var(--radius);
   padding: 0.75rem 1rem;
   display: inline-block;
+}
+
+/* ── CONTACT ─────────────────────────────────────────────── */
+.contact {
+  padding-block: 6rem;
+  background: var(--white);
+}
+
+.contact__desc {
+  font-size: 1rem;
+  color: var(--slate);
+  margin-top: 0.5rem;
+}
+
+.contact-form {
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contact-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.contact-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.contact-form__group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.contact-form__group input,
+.contact-form__group textarea {
+  background: var(--white);
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--navy);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+  width: 100%;
+}
+
+.contact-form__group input::placeholder,
+.contact-form__group textarea::placeholder {
+  color: var(--slate-light);
+}
+
+.contact-form__group input:focus,
+.contact-form__group textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0,180,216,0.12);
+}
+
+.contact-form__group input.error,
+.contact-form__group textarea.error {
+  border-color: #f87171;
+}
+
+.contact-form__error {
+  font-size: 0.78rem;
+  color: #f87171;
+  min-height: 1em;
+}
+
+.contact-form__success {
+  background: rgba(0,180,216,0.08);
+  border: 1px solid var(--blue);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  color: var(--blue);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .contact-form__row {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── BOOKING ─────────────────────────────────────────────── */

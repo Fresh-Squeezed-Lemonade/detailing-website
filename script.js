@@ -74,6 +74,66 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 
+// ── CONTACT FORM ─────────────────────────────────────────
+const contactForm    = document.getElementById('contactForm');
+const contactSubmit  = document.getElementById('contactSubmit');
+const contactSuccess = document.getElementById('contactSuccess');
+
+const contactValidators = {
+  contactName:    v => v.trim().length < 2  ? 'Please enter your name.'          : '',
+  contactEmail:   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Enter a valid email address.',
+  contactSubject: v => v.trim().length < 2  ? 'Please enter a subject.'          : '',
+  contactMessage: v => v.trim().length < 10 ? 'Please enter a message (at least 10 characters).' : '',
+};
+
+const showContactError = (id, msg) => {
+  const field = document.getElementById(id);
+  const err   = document.getElementById(id + 'Error');
+  if (!field || !err) return;
+  field.classList.toggle('error', !!msg);
+  err.textContent = msg;
+};
+
+Object.keys(contactValidators).forEach(id => {
+  const field = document.getElementById(id);
+  if (!field) return;
+  field.addEventListener('blur',  () => showContactError(id, contactValidators[id](field.value)));
+  field.addEventListener('input', () => {
+    if (field.classList.contains('error'))
+      showContactError(id, contactValidators[id](field.value));
+  });
+});
+
+if (contactForm) {
+  contactForm.addEventListener('submit', e => {
+    e.preventDefault();
+    let hasError = false;
+
+    Object.keys(contactValidators).forEach(id => {
+      const field = document.getElementById(id);
+      const msg   = contactValidators[id](field ? field.value : '');
+      showContactError(id, msg);
+      if (msg) hasError = true;
+    });
+
+    if (hasError) return;
+
+    const name    = document.getElementById('contactName').value.trim();
+    const email   = document.getElementById('contactEmail').value.trim();
+    const subject = document.getElementById('contactSubject').value.trim();
+    const message = document.getElementById('contactMessage').value.trim();
+
+    const body = `Hi Jordan,%0A%0A${encodeURIComponent(message)}%0A%0A— ${encodeURIComponent(name)} (${encodeURIComponent(email)})`;
+    const mailto = `mailto:122otoj@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+
+    window.location.href = mailto;
+
+    contactSubmit.hidden = true;
+    contactSuccess.hidden = false;
+  });
+}
+
+
 // ── LIGHTBOX ─────────────────────────────────────────────
 // Build the lightbox overlay once and reuse it
 const lightbox = document.createElement('div');
