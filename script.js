@@ -1,10 +1,11 @@
 /* =========================================================
    Jordan Clark's Car Detailing — script.js
    • Sticky nav scroll behaviour
-   • Mobile nav toggle
-   • Smooth scroll with nav offset
+   • Mobile nav toggle (with focus return + outside-click close)
+   • Smooth scroll via CSS scroll-margin-top (JS only closes mobile menu)
    • Footer year
-   • Lightbox for before/after gallery images
+   • Contact form (mailto, honest success state, button stays available)
+   • Lightbox (focus trap, debounced transitions, touch swipe)
    ========================================================= */
 
 'use strict';
@@ -32,44 +33,57 @@ const openNav = () => {
   navLinks.classList.add('open');
   navToggle.setAttribute('aria-expanded', 'true');
   navToggle.setAttribute('aria-label', 'Close menu');
-  document.body.style.overflow = 'hidden';
+  // Use a class on <body> instead of inline overflow so the lightbox
+  // can manage its own scroll lock independently
+  document.body.classList.add('nav-open');
 };
 
-const closeNav = () => {
+const closeNav = (returnFocus = true) => {
   navLinks.classList.remove('open');
   navToggle.setAttribute('aria-expanded', 'false');
   navToggle.setAttribute('aria-label', 'Open menu');
-  document.body.style.overflow = '';
+  document.body.classList.remove('nav-open');
+  // Return focus to the toggle button (skip when user clicked a link —
+  // the browser will move focus to the destination instead)
+  if (returnFocus) navToggle.focus();
 };
 
 navToggle.addEventListener('click', () => {
   navLinks.classList.contains('open') ? closeNav() : openNav();
 });
 
+// Close on link click — don't steal focus from the scroll destination
 navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', closeNav);
+  link.addEventListener('click', () => closeNav(false));
 });
 
+// Close on Escape — return focus to toggle
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && navLinks.classList.contains('open')) closeNav();
+  if (e.key === 'Escape' && navLinks.classList.contains('open')) closeNav(true);
+});
+
+// Close when clicking outside the open menu
+document.addEventListener('click', e => {
+  if (
+    navLinks.classList.contains('open') &&
+    !navLinks.contains(e.target) &&
+    !navToggle.contains(e.target)
+  ) {
+    closeNav(false);
+  }
 });
 
 
-// ── SMOOTH SCROLL OFFSET (accounts for fixed nav) ────────
+// ── SMOOTH SCROLL ────────────────────────────────────────
+// Offset is handled by scroll-padding-top / scroll-margin-top in CSS.
+// JS only prevents the default jump on '#' hrefs so the CSS smooth
+// scroll and offset take effect cleanly.
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', e => {
     const targetId = anchor.getAttribute('href');
-    if (targetId === '#') return;
-
-    const target = document.querySelector(targetId);
-    if (!target) return;
-
-    e.preventDefault();
-
-    const navHeight = nav.offsetHeight;
-    const targetTop = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
-
-    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+    if (targetId === '#') { e.preventDefault(); return; }
+    // All other anchors: let the browser handle smooth scroll via CSS.
+    // No manual scrollTo needed.
   });
 });
 
@@ -80,10 +94,10 @@ const contactSubmit  = document.getElementById('contactSubmit');
 const contactSuccess = document.getElementById('contactSuccess');
 
 const contactValidators = {
-  contactName:    v => v.trim().length < 2  ? 'Please enter your name.'          : '',
+  contactName:    v => v.trim().length < 2  ? 'Please enter your name.'                          : '',
   contactEmail:   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Enter a valid email address.',
-  contactSubject: v => v.trim().length < 2  ? 'Please enter a subject.'          : '',
-  contactMessage: v => v.trim().length < 10 ? 'Please enter a message (at least 10 characters).' : '',
+  contactSubject: v => v.trim().length < 2  ? 'Please enter a subject.'                          : '',
+  contactMessage: v => v.trim().length < 10 ? 'Please write a message (at least 10 characters).' : '',
 };
 
 const showContactError = (id, msg) => {
@@ -123,19 +137,22 @@ if (contactForm) {
     const subject = document.getElementById('contactSubject').value.trim();
     const message = document.getElementById('contactMessage').value.trim();
 
-    const body = `Hi Jordan,%0A%0A${encodeURIComponent(message)}%0A%0A— ${encodeURIComponent(name)} (${encodeURIComponent(email)})`;
+    const body   = `Hi Jordan,%0A%0A${encodeURIComponent(message)}%0A%0A— ${encodeURIComponent(name)} (${encodeURIComponent(email)})`;
     const mailto = `mailto:122otoj@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
 
     window.location.href = mailto;
 
-    contactSubmit.hidden = true;
+    // Show an honest status — the email hasn't been sent yet, just prepared.
+    // Leave the button available so the user can retry if their email app
+    // didn't open.
+    contactSuccess.textContent =
+      '✓ Your email app should open with your message ready — just review and hit Send there.';
     contactSuccess.hidden = false;
   });
 }
 
 
 // ── LIGHTBOX ─────────────────────────────────────────────
-// Build the lightbox overlay once and reuse it
 const lightbox = document.createElement('div');
 lightbox.id = 'lightbox';
 lightbox.setAttribute('role', 'dialog');
@@ -158,50 +175,60 @@ const lightboxClose   = lightbox.querySelector('.lightbox__close');
 const lightboxPrev    = lightbox.querySelector('.lightbox__prev');
 const lightboxNext    = lightbox.querySelector('.lightbox__next');
 
-// Collect all gallery images in order
+// All focusable elements inside the lightbox (for focus trapping)
+const lightboxFocusable = [lightboxClose, lightboxPrev, lightboxNext];
+
 const galleryImages = Array.from(document.querySelectorAll('.before-after__panel img'));
-let currentIndex = 0;
+let currentIndex  = 0;
+let lastFocused   = null; // element that had focus before lightbox opened
+let transitionPending = false; // debounce rapid arrow presses
+
+const updateNavButtons = () => {
+  const show = galleryImages.length > 1;
+  lightboxPrev.style.display = show ? '' : 'none';
+  lightboxNext.style.display = show ? '' : 'none';
+};
 
 const openLightbox = index => {
+  lastFocused  = document.activeElement;
   currentIndex = index;
   const img = galleryImages[currentIndex];
   lightboxImg.src = img.src;
   lightboxImg.alt = img.alt;
   lightboxCaption.textContent = img.alt;
   lightbox.classList.add('active');
-  document.body.style.overflow = 'hidden';
+  // Use a class so this doesn't conflict with the nav scroll lock
+  document.body.classList.add('lightbox-open');
   lightboxClose.focus();
   updateNavButtons();
 };
 
 const closeLightbox = () => {
   lightbox.classList.remove('active');
-  document.body.style.overflow = '';
-  // Return focus to the image that was clicked
-  galleryImages[currentIndex].focus();
+  document.body.classList.remove('lightbox-open');
+  // Return focus to wherever it was before opening
+  if (lastFocused) lastFocused.focus();
 };
 
 const showImage = index => {
+  if (transitionPending) return; // ignore rapid key/button presses
+  transitionPending = true;
   currentIndex = (index + galleryImages.length) % galleryImages.length;
   const img = galleryImages[currentIndex];
+
   lightboxImg.classList.add('lightbox__img--fade');
   setTimeout(() => {
     lightboxImg.src = img.src;
     lightboxImg.alt = img.alt;
     lightboxCaption.textContent = img.alt;
     lightboxImg.classList.remove('lightbox__img--fade');
+    transitionPending = false;
   }, 150);
+
   updateNavButtons();
 };
 
-const updateNavButtons = () => {
-  // Hide nav arrows if there's only one image
-  const show = galleryImages.length > 1;
-  lightboxPrev.style.display = show ? '' : 'none';
-  lightboxNext.style.display = show ? '' : 'none';
-};
-
-// Make each gallery image clickable
+// Make gallery images clickable
 galleryImages.forEach((img, index) => {
   img.style.cursor = 'zoom-in';
   img.setAttribute('tabindex', '0');
@@ -219,15 +246,42 @@ lightboxClose.addEventListener('click', closeLightbox);
 lightboxPrev.addEventListener('click', () => showImage(currentIndex - 1));
 lightboxNext.addEventListener('click', () => showImage(currentIndex + 1));
 
-// Click outside image to close
+// Click backdrop to close
 lightbox.addEventListener('click', e => {
   if (e.target === lightbox) closeLightbox();
 });
 
-// Keyboard: Escape to close, arrow keys to navigate
+// Keyboard: Escape, arrows, and focus trap (Tab stays inside lightbox)
 document.addEventListener('keydown', e => {
   if (!lightbox.classList.contains('active')) return;
-  if (e.key === 'Escape')      closeLightbox();
-  if (e.key === 'ArrowLeft')   showImage(currentIndex - 1);
-  if (e.key === 'ArrowRight')  showImage(currentIndex + 1);
+
+  if (e.key === 'Escape')     { closeLightbox(); return; }
+  if (e.key === 'ArrowLeft')  { showImage(currentIndex - 1); return; }
+  if (e.key === 'ArrowRight') { showImage(currentIndex + 1); return; }
+
+  // Focus trap — keep Tab cycling within the lightbox buttons
+  if (e.key === 'Tab') {
+    const visible = lightboxFocusable.filter(el => el.style.display !== 'none');
+    if (visible.length === 0) { e.preventDefault(); return; }
+    const first = visible[0];
+    const last  = visible[visible.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
+    }
+  }
 });
+
+// Touch swipe support for mobile
+let touchStartX = 0;
+lightbox.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+}, { passive: true });
+
+lightbox.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].screenX;
+  if (Math.abs(diff) > 40) { // 40px threshold
+    diff > 0 ? showImage(currentIndex + 1) : showImage(currentIndex - 1);
+  }
+}, { passive: true });

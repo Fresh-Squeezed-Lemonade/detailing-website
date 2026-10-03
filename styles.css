@@ -29,7 +29,15 @@
   --transition: 220ms ease;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* matches fixed nav height */
+}
+
+section[id],
+header[id] {
+  scroll-margin-top: 80px;
+}
 
 body {
   font-family: var(--font-body);
@@ -909,6 +917,12 @@ body {
 .footer__copy {
   font-size: 0.78rem;
   color: #3d5166;
+}
+
+/* Scroll locks — class-based so nav and lightbox don't clobber each other */
+body.nav-open,
+body.lightbox-open {
+  overflow: hidden;
 }
 
 /* ── FOCUS VISIBLE ───────────────────────────────────────── */
