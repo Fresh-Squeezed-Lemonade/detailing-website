@@ -5,20 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jordan Clark's Car Detailing | Dedicated Auto Detailing</title>
   <meta name="description" content="Jordan Clark's car detailing services. Exterior, interior, and full detail packages. I come to you. Book online today." />
+
+  <!-- Local SEO -->
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://fresh-squeezed-lemonade.github.io/pressure-washing-website/" />
+
+  <!-- Open Graph (link previews in iMessage, Facebook, etc.) -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://fresh-squeezed-lemonade.github.io/pressure-washing-website/" />
+  <meta property="og:title"       content="Jordan Clark's Car Detailing" />
+  <meta property="og:description" content="Dedicated mobile car detailing. Exterior, interior, and full detail packages. I come to you." />
+
+  <!-- Structured data — Local Business -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Jordan Clark's Car Detailing",
+    "description": "Mobile car detailing services including exterior, interior, and full detail packages. I come to you.",
+    "url": "https://fresh-squeezed-lemonade.github.io/pressure-washing-website/",
+    "email": "122otoj@gmail.com",
+    "priceRange": "$50–$130",
+    "bookingURL": "https://cal.com/jordan-clark-bufuf0",
+    "areaServed": {
+      "@type": "State",
+      "name": "Utah"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Car Detailing Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": { "@type": "Service", "name": "Exterior Detail" },
+          "price": "50",
+          "priceCurrency": "USD"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": { "@type": "Service", "name": "Interior Detail" },
+          "price": "100",
+          "priceCurrency": "USD"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": { "@type": "Service", "name": "Full Detail" },
+          "price": "130",
+          "priceCurrency": "USD"
+        }
+      ]
+    }
+  }
+  </script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWHLZ05KZ0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SWHLZ05KZ0');
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SWHLZ05KZ0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SWHLZ05KZ0');
-</script>
 <body>
 
   <!-- NAV -->
@@ -212,7 +265,7 @@
         </div>
         <button type="submit" class="btn btn--primary" id="contactSubmit">Send Message</button>
         <div class="contact-form__success" id="contactSuccess" hidden>
-          ✓ Your email client should have opened with your message ready to send — just hit Send!
+          ✓ Your email app should open with your message ready — just review and hit Send there.
         </div>
       </form>
     </div>
@@ -232,7 +285,6 @@
       </div>
 
       <div class="booking__embed-wrapper">
-        <!-- Cal.com embed — replace YOUR_CAL_USERNAME with your actual Cal.com username -->
         <iframe
           src="https://cal.com/jordan-clark-bufuf0"
           width="100%"
