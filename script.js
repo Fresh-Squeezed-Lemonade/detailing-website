@@ -88,16 +88,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 
-// ── CONTACT FORM ─────────────────────────────────────────
+// ── CONTACT FORM (EmailJS) ───────────────────────────────
+emailjs.init('b-wDLjf2ow3eMg5Um');
+
 const contactForm    = document.getElementById('contactForm');
 const contactSubmit  = document.getElementById('contactSubmit');
 const contactSuccess = document.getElementById('contactSuccess');
 
 const contactValidators = {
-  contactName:    v => v.trim().length < 2  ? 'Please enter your name.'                          : '',
+  contactName:    v => v.trim().length < 2  ? 'Please enter your name.'                           : '',
   contactEmail:   v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Enter a valid email address.',
-  contactSubject: v => v.trim().length < 2  ? 'Please enter a subject.'                          : '',
-  contactMessage: v => v.trim().length < 10 ? 'Please write a message (at least 10 characters).' : '',
+  contactSubject: v => v.trim().length < 2  ? 'Please enter a subject.'                           : '',
+  contactMessage: v => v.trim().length < 10 ? 'Please write a message (at least 10 characters).'  : '',
 };
 
 const showContactError = (id, msg) => {
@@ -119,7 +121,7 @@ Object.keys(contactValidators).forEach(id => {
 });
 
 if (contactForm) {
-  contactForm.addEventListener('submit', e => {
+  contactForm.addEventListener('submit', async e => {
     e.preventDefault();
     let hasError = false;
 
@@ -132,22 +134,32 @@ if (contactForm) {
 
     if (hasError) return;
 
-    const name    = document.getElementById('contactName').value.trim();
-    const email   = document.getElementById('contactEmail').value.trim();
-    const subject = document.getElementById('contactSubject').value.trim();
-    const message = document.getElementById('contactMessage').value.trim();
+    // Disable button and show loading state while sending
+    contactSubmit.disabled = true;
+    contactSubmit.textContent = 'Sending…';
 
-    const body   = `Hi Jordan,%0A%0A${encodeURIComponent(message)}%0A%0A— ${encodeURIComponent(name)} (${encodeURIComponent(email)})`;
-    const mailto = `mailto:122otoj@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    const templateParams = {
+      from_name:    document.getElementById('contactName').value.trim(),
+      from_email:   document.getElementById('contactEmail').value.trim(),
+      subject:      document.getElementById('contactSubject').value.trim(),
+      message:      document.getElementById('contactMessage').value.trim(),
+    };
 
-    window.location.href = mailto;
+    try {
+      await emailjs.send('website', 'template_gmfnron', templateParams);
 
-    // Show an honest status — the email hasn't been sent yet, just prepared.
-    // Leave the button available so the user can retry if their email app
-    // didn't open.
-    contactSuccess.textContent =
-      '✓ Your email app should open with your message ready — just review and hit Send there.';
-    contactSuccess.hidden = false;
+      // Real success — email was actually sent
+      contactForm.reset();
+      contactSubmit.hidden = true;
+      contactSuccess.textContent = '✓ Message sent! I\'ll get back to you soon.';
+      contactSuccess.hidden = false;
+
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      contactSubmit.disabled = false;
+      contactSubmit.textContent = 'Send Message';
+      showContactError('contactMessage', 'Something went wrong — please try again or email me directly at 122otoj@gmail.com.');
+    }
   });
 }
 
