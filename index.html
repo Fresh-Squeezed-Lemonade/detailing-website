@@ -3,56 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jordan Clark's Car Detailing | Dedicated Auto Detailing</title>
-  <meta name="description" content="Jordan Clark's car detailing services. Exterior, interior, and full detail packages. I come to you. Book online today." />
+  <title>Jordan Clark's Car Detailing | Professional Auto Detailing</title>
+  <meta name="description" content="Jordan Clark's car detailing. Bring your car to me for a thorough exterior, interior, or full detail. Book online today." />
 
   <!-- Local SEO -->
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://fresh-squeezed-lemonade.github.io/detailing-website/" />
 
-  <!-- Open Graph (link previews in iMessage, Facebook, etc.) -->
+  <!-- Open Graph -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://fresh-squeezed-lemonade.github.io/detailing-website/" />
   <meta property="og:title"       content="Jordan Clark's Car Detailing" />
-  <meta property="og:description" content="Dedicated mobile car detailing. Exterior, interior, and full detail packages. I come to you." />
+  <meta property="og:description" content="Professional car detailing. Bring your car to me for a thorough exterior, interior, or full detail." />
 
-  <!-- Structured data — Local Business -->
+  <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Jordan Clark's Car Detailing",
-    "description": "Mobile car detailing services including exterior, interior, and full detail packages. I come to you.",
+    "description": "Professional car detailing. Bring your car to me for a thorough exterior, interior, or full detail.",
     "url": "https://fresh-squeezed-lemonade.github.io/detailing-website/",
     "email": "122otoj@gmail.com",
     "priceRange": "$50–$130",
     "bookingURL": "https://cal.com/jordan-clark-bufuf0",
-    "areaServed": {
-      "@type": "State",
-      "name": "Utah"
-    },
+    "areaServed": { "@type": "State", "name": "Utah" },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Car Detailing Services",
       "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": { "@type": "Service", "name": "Exterior Detail" },
-          "price": "50",
-          "priceCurrency": "USD"
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": { "@type": "Service", "name": "Interior Detail" },
-          "price": "100",
-          "priceCurrency": "USD"
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": { "@type": "Service", "name": "Full Detail" },
-          "price": "130",
-          "priceCurrency": "USD"
-        }
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Exterior Detail" }, "price": "50",  "priceCurrency": "USD" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Interior Detail" }, "price": "100", "priceCurrency": "USD" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Full Detail"     }, "price": "130", "priceCurrency": "USD" }
       ]
     }
   }
@@ -69,7 +51,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -78,7 +60,7 @@
   <nav class="nav" id="nav">
     <div class="nav__inner container">
       <a href="#" class="nav__logo">
-        <span class="logo-mark">⬡</span> Jordan Clark's Car Detailing
+        Jordan Clark<span class="logo-dot">.</span>
       </a>
       <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -94,25 +76,28 @@
 
   <!-- HERO -->
   <header class="hero" id="home">
-    <div class="hero__bg-grid" aria-hidden="true"></div>
+    <div class="hero__overlay" aria-hidden="true"></div>
     <div class="container hero__content">
-      <p class="hero__eyebrow">Dedicated Car Detailing</p>
+      <p class="hero__eyebrow">Professional Car Detailing · Bring Your Car to Me</p>
       <h1 class="hero__headline">
-        We Make Things<br />
-        <span class="hero__blast">CLEAN</span>
+        Your Car Deserves<br />
+        <span class="hero__accent">Better.</span>
       </h1>
       <p class="hero__sub">
-        Exterior, interior, or the full detail — I come to you.<br />
-        Just have a garden hose and an electrical outlet ready.
+        Bring your car to me and I'll give it the full attention it deserves —
+        proper equipment, no shortcuts, no rush.
       </p>
       <div class="hero__ctas">
         <a href="#booking" class="btn btn--primary">Book a Detail</a>
-        <a href="#services" class="btn btn--ghost">See Services & Pricing</a>
+        <a href="#services" class="btn btn--ghost">See Pricing</a>
+      </div>
+      <div class="hero__trust">
+        <span>✦ You Bring the Car</span>
+        <span>✦ Flat Rate Pricing</span>
+        <span>✦ Interior &amp; Exterior</span>
       </div>
     </div>
-    <div class="hero__scroll-hint" aria-hidden="true">
-      <span></span>
-    </div>
+    <div class="hero__scroll-hint" aria-hidden="true"><span></span></div>
   </header>
 
   <!-- SERVICES & PRICING -->
@@ -121,28 +106,29 @@
       <div class="section-header">
         <p class="section-eyebrow">What I Offer</p>
         <h2 class="section-title">Services &amp; Pricing</h2>
+        <p class="section-desc">Bring your car to me and I'll take care of the rest. Proper equipment, real pressure washing, and the time to do it right.</p>
       </div>
       <div class="services__grid services__grid--three">
 
         <article class="service-card">
           <h3 class="service-card__title">Exterior Detail</h3>
           <div class="service-card__price">$50 <span>flat rate</span></div>
-          <p class="service-card__desc">A thorough detail of the full exterior — body panels, wheels, and tires. I come to you; just have a garden hose and an electrical outlet available.</p>
+          <p class="service-card__desc">A thorough exterior clean — paint, wheels, tires, and trim. Bring your car to me and I'll use a full pressure washer setup to get it properly clean.</p>
           <ul class="service-card__list">
-            <li>Full exterior detail</li>
-            <li>Wheels &amp; tires</li>
-            <li>Rinse &amp; dry</li>
+            <li>Hand wash &amp; rinse</li>
+            <li>Wheels &amp; tire scrub</li>
+            <li>Trim &amp; panel wipe-down</li>
           </ul>
         </article>
 
         <article class="service-card">
           <h3 class="service-card__title">Interior Detail</h3>
           <div class="service-card__price">$100 <span>flat rate</span></div>
-          <p class="service-card__desc">A deep clean of the full interior — vacuuming, wiping down every surface, and clearing out built-up grime. I come to you; just have an electrical outlet available.</p>
+          <p class="service-card__desc">A deep clean of the full cabin — every seat, surface, and crevice. Bring your car to me and I'll have everything on hand to get it done properly.</p>
           <ul class="service-card__list">
-            <li>Full interior vacuum</li>
-            <li>Dashboard &amp; surface wipe-down</li>
-            <li>Door panels &amp; console</li>
+            <li>Full vacuum — seats, floors, trunk</li>
+            <li>Dashboard &amp; console wipe-down</li>
+            <li>Door panels &amp; pockets</li>
           </ul>
         </article>
 
@@ -150,7 +136,7 @@
           <div class="service-card__badge">Best Value</div>
           <h3 class="service-card__title">Full Detail</h3>
           <div class="service-card__price">$130 <span>flat rate</span></div>
-          <p class="service-card__desc">The complete package — everything inside and out. Best value if your car needs a proper reset. I come to you; just have a garden hose and an electrical outlet available.</p>
+          <p class="service-card__desc">The complete treatment — exterior and interior done together in one session. The best way to fully reset your car. Save $20 vs. booking each separately.</p>
           <ul class="service-card__list">
             <li>Everything in Exterior</li>
             <li>Everything in Interior</li>
@@ -168,12 +154,12 @@
 
       <div class="addon-banner">
         <div>
-          <strong>Pet Hair Add-on — +$50</strong>
-          <p>Pet hair requires extra time and specialized tools to remove properly. If your car has pet hair, add $50 to any service when booking.</p>
+          <strong>Pet Hair Removal — +$50</strong>
+          <p>Pet hair takes extra time and specialized tools to remove completely. If your car has pet hair, add this to any service when booking.</p>
         </div>
       </div>
 
-      <p class="pricing__note">⚠️ Got more than one car? Please book a separate appointment for each vehicle so I can give every car the time it deserves.</p>
+      <p class="pricing__note">⚠️ Multiple cars? Please book a separate appointment for each vehicle — every car gets its own dedicated time so nothing gets rushed.</p>
     </div>
   </section>
 
@@ -181,8 +167,9 @@
   <section class="gallery" id="gallery">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">The Proof</p>
+        <p class="section-eyebrow">The Results</p>
         <h2 class="section-title">Before &amp; After</h2>
+        <p class="section-desc">Real work, real cars. Tap any photo to see it full size.</p>
       </div>
       <div class="gallery__grid">
 
@@ -265,7 +252,7 @@
         </div>
         <button type="submit" class="btn btn--primary" id="contactSubmit">Send Message</button>
         <div class="contact-form__success" id="contactSuccess" hidden>
-          ✓ Your email app should open with your message ready — just review and hit Send there.
+          ✓ Message sent! I'll get back to you soon.
         </div>
       </form>
     </div>
@@ -277,13 +264,11 @@
       <div class="section-header">
         <p class="section-eyebrow">Get on the Calendar</p>
         <h2 class="section-title">Book a Detail</h2>
-        <p class="booking__desc">Pick a time that works for you below. I'll come to your location — just make sure you have a garden hose and an electrical outlet accessible, and I'll handle everything else.</p>
+        <p class="booking__desc">Pick a time that works for you and bring your car to me. I'll have everything ready to give it a proper, thorough detail.</p>
       </div>
-
       <div class="booking__notice">
-        <p><strong>Multiple cars?</strong> Please book a separate appointment for each vehicle. Each car gets its own dedicated slot so nothing gets rushed.</p>
+        <p><strong>Multiple cars?</strong> Please book a separate appointment for each vehicle — every car gets its own dedicated slot so nothing gets rushed.</p>
       </div>
-
       <div class="booking__embed-wrapper">
         <iframe
           src="https://cal.com/jordan-clark-bufuf0"
@@ -295,8 +280,8 @@
           class="booking__iframe"
         ></iframe>
         <p class="booking__fallback">
-          Having trouble with the calendar?
-          <a href="https://cal.com/jordan-clark-bufuf0" target="_blank" rel="noopener noreferrer">Open it in a new tab →</a>
+          Having trouble?
+          <a href="https://cal.com/jordan-clark-bufuf0" target="_blank" rel="noopener noreferrer">Open the calendar in a new tab →</a>
         </p>
       </div>
     </div>
@@ -306,9 +291,9 @@
   <footer class="footer">
     <div class="container footer__inner">
       <a href="#" class="nav__logo">
-        <span class="logo-mark">⬡</span> Jordan Clark's Car Detailing
+        Jordan Clark<span class="logo-dot">.</span>
       </a>
-      <p class="footer__tagline">Dedicated Car Detailing · I Come to You</p>
+      <p class="footer__tagline">Professional Car Detailing · Bring Your Car to Me</p>
       <nav class="footer__links" aria-label="Footer navigation">
         <a href="#services">Services & Pricing</a>
         <a href="#gallery">Results</a>
