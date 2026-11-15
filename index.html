@@ -68,8 +68,9 @@
       <ul class="nav__links" id="navLinks">
         <li><a href="#gallery">Results</a></li>
         <li><a href="#services">Services & Pricing</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="nav__book"><a href="#booking" class="btn btn--nav">Book Now</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#booking">Book Online</a></li>
+        <li class="nav__book"><a href="#contact" class="btn btn--nav">Contact Me</a></li>
       </ul>
     </div>
   </nav>
@@ -88,7 +89,7 @@
         proper equipment, no shortcuts, no rush.
       </p>
       <div class="hero__ctas">
-        <a href="#booking" class="btn btn--primary">Book a Detail</a>
+        <a href="#contact" class="btn btn--primary">Talk to Me</a>
         <a href="#services" class="btn btn--ghost">See Pricing</a>
       </div>
       <div class="hero__trust">
@@ -99,6 +100,34 @@
     </div>
     <div class="hero__scroll-hint" aria-hidden="true"><span></span></div>
   </header>
+
+  <!-- WHY DETAIL -->
+  <section class="why" id="why">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Why It Matters</p>
+        <h2 class="section-title">Why Detail Your Car?</h2>
+        <p class="section-desc">A regular wash handles surface dirt. Detailing goes further, cleaning the places a quick wash skips.</p>
+      </div>
+      <div class="why__grid">
+        <div class="why__item">
+          <span class="why__num">01</span>
+          <h3 class="why__title">Protect the Paint</h3>
+          <p>Dirt, grit, and road grime left on a car's surface can dull the finish over time. A thorough cleaning helps the paint last and keeps it looking its best.</p>
+        </div>
+        <div class="why__item">
+          <span class="why__num">02</span>
+          <h3 class="why__title">Fight Winter Wear</h3>
+          <p>Road salt and grime from Utah winters build up on wheels, trim, and the lower body. Getting it off regularly helps prevent damage that adds up over the years.</p>
+        </div>
+        <div class="why__item">
+          <span class="why__num">03</span>
+          <h3 class="why__title">A Cleaner Cabin</h3>
+          <p>Seats, carpets, and vents collect dust, crumbs, and pet hair. A deep interior clean makes the car nicer to be in, and easier to sell when the time comes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- BEFORE & AFTER GALLERY -->
   <section class="gallery" id="gallery">
@@ -203,15 +232,15 @@
       </div>
 
       <div class="service-card__actions">
-        <a href="#booking" class="btn btn--ghost-dark">Book Exterior</a>
-        <a href="#booking" class="btn btn--ghost-dark">Book Interior</a>
-        <a href="#booking" class="btn btn--primary">Book Full Detail</a>
+        <a href="#contact" class="btn btn--ghost-dark">Ask About Exterior</a>
+        <a href="#contact" class="btn btn--ghost-dark">Ask About Interior</a>
+        <a href="#contact" class="btn btn--primary">Ask About Full Detail</a>
       </div>
 
       <div class="addon-banner">
         <div>
-          <strong>Pet Hair Removal — +$50</strong>
-          <p>Pet hair takes extra time and specialized tools to remove completely. If your car has pet hair, add this to any service when booking.</p>
+          <strong>Additional Charge — Excessive Dirt, Debris &amp; Pet Hair</strong>
+          <p>Cars with excessive dirt, debris, pet hair, or similar heavy buildup take extra time and effort to clean properly, so an additional charge of +$50 applies. If your car falls into this category, please mention it when booking.</p>
         </div>
       </div>
 
@@ -219,13 +248,89 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="contact" id="contact">
+  <!-- REVIEWS -->
+  <section class="reviews" id="reviews">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">Get in Touch</p>
-        <h2 class="section-title">Send Me a Message</h2>
-        <p class="contact__desc">Have a question before booking? Send me a message and I'll get back to you.</p>
+        <p class="section-eyebrow">Customer Reviews</p>
+        <h2 class="section-title">What Customers Say</h2>
+        <p class="section-desc">Honest feedback from people whose cars I've detailed.</p>
+      </div>
+
+      <div class="reviews__grid">
+        <p class="review-empty">No reviews yet. If I've detailed your car, I'd love to hear how it went. You can leave one below.</p>
+
+        <!--
+          TO ADD A REVIEW: copy the block below, paste it right here (above this comment),
+          and fill in the customer's real words. Only add reviews customers actually sent you.
+          The "No reviews yet" message hides itself automatically once one is added.
+
+        <blockquote class="review-card">
+          <div class="review-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="review-card__text">Paste the customer's review here.</p>
+          <footer class="review-card__author">First name L. · Full Detail</footer>
+        </blockquote>
+        -->
+      </div>
+
+      <form class="review-form" id="reviewForm" novalidate>
+        <h3 class="review-form__title">Leave a Review</h3>
+        <p class="review-form__note">Tell me how your detail went. I read every review, and I may feature yours on this page.</p>
+
+        <div class="contact-form__row">
+          <div class="contact-form__group">
+            <label for="reviewName">Your Name</label>
+            <input type="text" id="reviewName" name="name" placeholder="First name is fine" required />
+            <span class="contact-form__error" id="reviewNameError"></span>
+          </div>
+          <div class="contact-form__group">
+            <label for="reviewEmail">Email (optional)</label>
+            <input type="email" id="reviewEmail" name="email" placeholder="Only if you'd like a reply" />
+            <span class="contact-form__error" id="reviewEmailError"></span>
+          </div>
+        </div>
+
+        <fieldset class="star-rating">
+          <legend>Your Rating</legend>
+          <div class="star-rating__stars">
+            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars">★<span class="sr-only">5 stars</span></label>
+            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars">★<span class="sr-only">4 stars</span></label>
+            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars">★<span class="sr-only">3 stars</span></label>
+            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars">★<span class="sr-only">2 stars</span></label>
+            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star">★<span class="sr-only">1 star</span></label>
+          </div>
+          <span class="contact-form__error" id="reviewRatingError"></span>
+        </fieldset>
+
+        <div class="contact-form__group">
+          <label for="reviewMessage">Your Review</label>
+          <textarea id="reviewMessage" name="message" rows="4" placeholder="What service did you get, and how did it turn out?" required></textarea>
+          <span class="contact-form__error" id="reviewMessageError"></span>
+        </div>
+
+        <button type="submit" class="btn btn--primary" id="reviewSubmit">Submit Review</button>
+        <div class="contact-form__success" id="reviewSuccess" hidden>
+          ✓ Thank you! Your review was sent to me directly.
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container contact__layout">
+      <div class="contact__intro">
+        <p class="section-eyebrow">Talk to Me Directly</p>
+        <h2 class="section-title">Let's Talk About Your Car</h2>
+        <p class="contact__desc">Skip the booking forms. Tell me about your car and what you need, and you'll get a reply from me personally.</p>
+        <ul class="contact__points">
+          <li>Describe your car and what you'd like done</li>
+          <li>I'll reply with a price and available times</li>
+          <li>Bring your car to me and I'll take it from there</li>
+        </ul>
+        <p class="contact__alt">Prefer email? Reach me at<br />
+          <a class="contact__email" href="mailto:122otoj@gmail.com">122otoj@gmail.com</a>
+        </p>
       </div>
       <form class="contact-form" id="contactForm">
         <div class="contact-form__row">
@@ -262,9 +367,9 @@
   <section class="booking" id="booking">
     <div class="container">
       <div class="section-header">
-        <p class="section-eyebrow">Get on the Calendar</p>
-        <h2 class="section-title">Book a Detail</h2>
-        <p class="booking__desc">Pick a time that works for you and bring your car to me. I'll have everything ready to give it a proper, thorough detail.</p>
+        <p class="section-eyebrow">Prefer to Book Yourself?</p>
+        <h2 class="section-title">Book Online</h2>
+        <p class="booking__desc">If you already know what you need, pick a time below and bring your car to me. Not sure? <a href="#contact">Talk to me first.</a></p>
       </div>
       <div class="booking__notice">
         <p><strong>Multiple cars?</strong> Please book a separate appointment for each vehicle — every car gets its own dedicated slot so nothing gets rushed.</p>
@@ -294,11 +399,13 @@
         Jordan Clark<span class="logo-dot">.</span>
       </a>
       <p class="footer__tagline">Professional Car Detailing · Bring Your Car to Me</p>
+      <a href="#booking" class="btn btn--ghost footer__book">Book Online</a>
       <nav class="footer__links" aria-label="Footer navigation">
         <a href="#gallery">Results</a>
         <a href="#services">Services & Pricing</a>
+        <a href="#reviews">Reviews</a>
         <a href="#contact">Contact</a>
-        <a href="#booking">Book</a>
+        <a href="#booking">Book Online</a>
       </nav>
       <p class="footer__copy">&copy; <span id="year"></span> Jordan Clark's Car Detailing. All rights reserved.</p>
     </div>

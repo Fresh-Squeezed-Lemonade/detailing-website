@@ -4,7 +4,7 @@
    • Mobile nav toggle (with focus return + outside-click close)
    • Smooth scroll via CSS scroll-margin-top (JS only closes mobile menu)
    • Footer year
-   • Contact form (mailto, honest success state, button stays available)
+   • Contact form (EmailJS — no email app required)
    • Lightbox (focus trap, debounced transitions, touch swipe)
    ========================================================= */
 
@@ -297,3 +297,72 @@ lightbox.addEventListener('touchend', e => {
     diff > 0 ? showImage(currentIndex + 1) : showImage(currentIndex - 1);
   }
 }, { passive: true });
+
+
+// ── REVIEW FORM (EmailJS) ────────────────────────────────
+// Reviews are emailed to Jordan for approval; they are not published automatically.
+const reviewForm = document.getElementById('reviewForm');
+
+if (reviewForm) {
+  const reviewSubmit  = document.getElementById('reviewSubmit');
+  const reviewSuccess = document.getElementById('reviewSuccess');
+
+  const setReviewError = (id, msg) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = msg;
+  };
+
+  reviewForm.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const name    = document.getElementById('reviewName').value.trim();
+    const email   = document.getElementById('reviewEmail').value.trim();
+    const message = document.getElementById('reviewMessage').value.trim();
+    const rating  = reviewForm.querySelector('input[name="rating"]:checked');
+
+    let hasError = false;
+
+    if (name.length < 2) {
+      setReviewError('reviewNameError', 'Please enter your name.');
+      hasError = true;
+    } else setReviewError('reviewNameError', '');
+
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setReviewError('reviewEmailError', 'Enter a valid email or leave this blank.');
+      hasError = true;
+    } else setReviewError('reviewEmailError', '');
+
+    if (!rating) {
+      setReviewError('reviewRatingError', 'Please choose a star rating.');
+      hasError = true;
+    } else setReviewError('reviewRatingError', '');
+
+    if (message.length < 10) {
+      setReviewError('reviewMessageError', 'Please write a few words about your experience.');
+      hasError = true;
+    } else setReviewError('reviewMessageError', '');
+
+    if (hasError) return;
+
+    reviewSubmit.disabled = true;
+    reviewSubmit.textContent = 'Sending…';
+
+    try {
+      await emailjs.send('website', 'template_gmfnron', {
+        from_name:  name,
+        from_email: email || 'Not provided',
+        subject:    `New review: ${rating.value}/5 stars`,
+        message:    `Rating: ${rating.value}/5\n\n${message}`,
+      });
+
+      reviewForm.reset();
+      reviewSubmit.hidden = true;
+      reviewSuccess.hidden = false;
+    } catch (err) {
+      console.error('EmailJS review error:', err);
+      reviewSubmit.disabled = false;
+      reviewSubmit.textContent = 'Submit Review';
+      setReviewError('reviewMessageError', 'Something went wrong. Please try again in a moment.');
+    }
+  });
+}
