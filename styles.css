@@ -1084,7 +1084,15 @@ body.lightbox-open {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.review-invite {
+  max-width: 680px;
+  margin: 0 auto 1.5rem;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--slate);
 }
 
 .review-empty {
