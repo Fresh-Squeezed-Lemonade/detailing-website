@@ -834,7 +834,7 @@ body {
 .booking__fallback a:hover { text-decoration: underline; }
 
 /* ── LIGHTBOX ────────────────────────────────────────────── */
-#lightbox {
+\#lightbox {
   display: none;
   position: fixed;
   inset: 0;
@@ -846,7 +846,7 @@ body {
   justify-content: center;
 }
 
-#lightbox.active { display: flex; }
+\#lightbox.active { display: flex; }
 
 .lightbox__inner {
   display: flex;
@@ -895,30 +895,6 @@ body {
 }
 .lightbox__close:hover { background: rgba(201,168,76,0.2); }
 
-.lightbox__prev,
-.lightbox__next {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.25);
-  color: var(--gold);
-  font-size: 1.75rem;
-  line-height: 1;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background var(--transition);
-}
-.lightbox__prev { left: 1rem; }
-.lightbox__next { right: 1rem; }
-.lightbox__prev:hover,
-.lightbox__next:hover { background: rgba(201,168,76,0.2); }
-
 /* ── FOOTER ──────────────────────────────────────────────── */
 .footer {
   background: #0B0C0F;
@@ -942,7 +918,9 @@ body {
 
 .footer__links {
   display: flex;
-  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 2rem;
 }
 
 .footer__links a {
@@ -1080,13 +1058,6 @@ body.lightbox-open {
   background: var(--white);
 }
 
-.reviews__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
-}
-
 .review-invite {
   max-width: 680px;
   margin: 0 auto 1.5rem;
@@ -1096,7 +1067,7 @@ body.lightbox-open {
 }
 
 .review-empty {
-  grid-column: 1 / -1;
+  flex: 1;
   font-size: 0.95rem;
   color: var(--slate);
   background: var(--parchment);
@@ -1105,9 +1076,6 @@ body.lightbox-open {
   padding: 1.5rem;
   text-align: center;
 }
-
-/* Hide the empty message once a real review card exists */
-.reviews__grid:has(.review-card) .review-empty { display: none; }
 
 .review-card {
   background: var(--parchment);
@@ -1241,3 +1209,60 @@ body.lightbox-open {
   .review-form { padding: 1.5rem; }
   .review-form .contact-form__row { grid-template-columns: 1fr; }
 }
+
+/* ── SCROLLING REVIEWS ───────────────────────────────────── */
+.reviews__summary {
+  margin: -1.5rem 0 2rem;
+  text-align: center;
+  color: var(--gold-dim);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.reviews__wrap {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.reviews__scroller {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0.5rem 0.25rem 1rem;
+  scrollbar-width: none;           /* hide the browser's own scrollbar + its small arrows */
+  -ms-overflow-style: none;
+}
+
+.reviews__scroller::-webkit-scrollbar { display: none; }
+
+.reviews__scroller .review-card {
+  flex: 0 0 min(320px, 85%);
+  scroll-snap-align: start;
+}
+
+.review-card__stars { white-space: nowrap; }
+
+.reviews__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.4);
+  background: var(--white);
+  color: var(--gold-dim);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(17,19,24,0.15);
+}
+.reviews__arrow:hover { background: var(--gold); color: var(--charcoal); }
+.reviews__arrow[hidden] { display: none; }
+.reviews__arrow:disabled { opacity: 0.35; cursor: default; }
+.reviews__arrow:disabled:hover { background: var(--white); color: var(--gold-dim); }
+#reviewsPrev { left: -0.75rem; }
+#reviewsNext { right: -0.75rem; }

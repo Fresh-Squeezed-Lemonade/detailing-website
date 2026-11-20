@@ -257,23 +257,16 @@
         <p class="section-desc">Honest feedback from people whose cars I've detailed.</p>
       </div>
 
-      <div class="reviews__grid">
-        <p class="review-empty">No reviews yet.</p>
-
-        <!--
-          TO ADD A REVIEW: copy the block below, paste it right here (above this comment),
-          and fill in the customer's real words. Only add reviews customers actually sent you.
-          The "No reviews yet" message hides itself automatically once one is added.
-
-        <blockquote class="review-card">
-          <div class="review-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
-          <p class="review-card__text">Paste the customer's review here.</p>
-          <footer class="review-card__author">First name L. · Full Detail</footer>
-        </blockquote>
-        -->
+      <div class="reviews__summary" id="reviewsSummary" aria-live="polite"></div>
+      <div class="reviews__wrap">
+        <button type="button" class="reviews__arrow" id="reviewsPrev" aria-label="Previous reviews" hidden>&#8249;</button>
+        <div class="reviews__scroller" id="reviewsList" tabindex="0" aria-label="Customer reviews">
+          <p class="review-empty">No reviews yet.</p>
+        </div>
+        <button type="button" class="reviews__arrow" id="reviewsNext" aria-label="Next reviews" hidden>&#8250;</button>
       </div>
 
-      <p class="review-invite">If I've detailed your car, I'd love to hear how it went. You can leave one below.</p>
+      <p class="review-invite">If I've detailed your car, I'd love to hear how it went. You can leave a review below.</p>
 
       <form class="review-form" id="reviewForm" novalidate>
         <h3 class="review-form__title">Leave a Review</h3>
@@ -311,7 +304,7 @@
         </div>
 
         <button type="submit" class="btn btn--primary" id="reviewSubmit">Submit Review</button>
-        <div class="contact-form__success" id="reviewSuccess" hidden>
+        <div class="contact-form__success" id="reviewSuccess" role="status" hidden>
           ✓ Thank you! Your review was sent to me directly.
         </div>
       </form>
@@ -414,6 +407,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="reviews.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

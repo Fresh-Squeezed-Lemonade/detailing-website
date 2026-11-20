@@ -6,6 +6,7 @@
    • Footer year
    • Contact form (EmailJS — no email app required)
    • Lightbox (focus trap, debounced transitions, touch swipe)
+   • Reviews strip (reads reviews.js) + review form (EmailJS)
    ========================================================= */
 
 'use strict';
@@ -172,8 +173,6 @@ lightbox.setAttribute('aria-modal', 'true');
 lightbox.setAttribute('aria-label', 'Image viewer');
 lightbox.innerHTML = `
   <button class="lightbox__close" aria-label="Close image">&times;</button>
-  <button class="lightbox__prev" aria-label="Previous image">&#8249;</button>
-  <button class="lightbox__next" aria-label="Next image">&#8250;</button>
   <div class="lightbox__inner">
     <img class="lightbox__img" src="" alt="" />
     <p class="lightbox__caption"></p>
@@ -184,22 +183,14 @@ document.body.appendChild(lightbox);
 const lightboxImg     = lightbox.querySelector('.lightbox__img');
 const lightboxCaption = lightbox.querySelector('.lightbox__caption');
 const lightboxClose   = lightbox.querySelector('.lightbox__close');
-const lightboxPrev    = lightbox.querySelector('.lightbox__prev');
-const lightboxNext    = lightbox.querySelector('.lightbox__next');
 
 // All focusable elements inside the lightbox (for focus trapping)
-const lightboxFocusable = [lightboxClose, lightboxPrev, lightboxNext];
+const lightboxFocusable = [lightboxClose];
 
 const galleryImages = Array.from(document.querySelectorAll('.before-after__panel img'));
 let currentIndex  = 0;
 let lastFocused   = null; // element that had focus before lightbox opened
 let transitionPending = false; // debounce rapid arrow presses
-
-const updateNavButtons = () => {
-  const show = galleryImages.length > 1;
-  lightboxPrev.style.display = show ? '' : 'none';
-  lightboxNext.style.display = show ? '' : 'none';
-};
 
 const openLightbox = index => {
   lastFocused  = document.activeElement;
@@ -212,7 +203,6 @@ const openLightbox = index => {
   // Use a class so this doesn't conflict with the nav scroll lock
   document.body.classList.add('lightbox-open');
   lightboxClose.focus();
-  updateNavButtons();
 };
 
 const closeLightbox = () => {
@@ -237,7 +227,6 @@ const showImage = index => {
     transitionPending = false;
   }, 150);
 
-  updateNavButtons();
 };
 
 // Make gallery images clickable
@@ -255,8 +244,6 @@ galleryImages.forEach((img, index) => {
 
 // Controls
 lightboxClose.addEventListener('click', closeLightbox);
-lightboxPrev.addEventListener('click', () => showImage(currentIndex - 1));
-lightboxNext.addEventListener('click', () => showImage(currentIndex + 1));
 
 // Click backdrop to close
 lightbox.addEventListener('click', e => {
@@ -297,6 +284,86 @@ lightbox.addEventListener('touchend', e => {
     diff > 0 ? showImage(currentIndex + 1) : showImage(currentIndex - 1);
   }
 }, { passive: true });
+
+
+// ── REVIEWS (reads reviews.js) ───────────────────────────
+// Add or hide reviews by editing reviews.js — nothing in this file needs to change.
+const reviewsList    = document.getElementById('reviewsList');
+const reviewsSummary = document.getElementById('reviewsSummary');
+const reviewsPrev    = document.getElementById('reviewsPrev');
+const reviewsNext    = document.getElementById('reviewsNext');
+
+const activeReviews = (window.REVIEWS || []).filter(r =>
+  r && r.active === true &&
+  typeof r.name === 'string' && r.name.trim() &&
+  typeof r.review === 'string' && r.review.trim() &&
+  Number.isInteger(r.rating) && r.rating >= 1 && r.rating <= 5
+);
+
+const renderReview = r => {
+  const card = document.createElement('blockquote');
+  card.className = 'review-card';
+
+  const stars = document.createElement('div');
+  stars.className = 'review-card__stars';
+  stars.setAttribute('aria-label', `${r.rating} out of 5 stars`);
+  stars.textContent = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+
+  const text = document.createElement('p');
+  text.className = 'review-card__text';
+  text.textContent = r.review.trim();
+
+  const author = document.createElement('footer');
+  author.className = 'review-card__author';
+  author.textContent = r.name.trim();
+
+  card.append(stars, text, author);
+  return card;
+};
+
+if (reviewsList && activeReviews.length) {
+  reviewsList.innerHTML = '';
+  activeReviews.forEach(r => reviewsList.appendChild(renderReview(r)));
+
+  const avg = activeReviews.reduce((total, r) => total + r.rating, 0) / activeReviews.length;
+  reviewsSummary.textContent =
+    `${avg.toFixed(1)} out of 5 · ${activeReviews.length} ${activeReviews.length === 1 ? 'review' : 'reviews'}`;
+
+  // Buttons move one card at a time to exact card positions, so they never
+  // fight the scroll-snap. The strip itself still swipes / shift-scrolls normally.
+  const cards = () => Array.from(reviewsList.querySelectorAll('.review-card'));
+
+  const updateArrows = () => {
+    const max = reviewsList.scrollWidth - reviewsList.clientWidth;
+    const overflow = max > 4;
+    reviewsPrev.hidden = !overflow;
+    reviewsNext.hidden = !overflow;
+    reviewsPrev.disabled = reviewsList.scrollLeft <= 4;
+    reviewsNext.disabled = reviewsList.scrollLeft >= max - 4;
+  };
+
+  const scrollByCard = dir => {
+    const list = cards();
+    const here = reviewsList.scrollLeft;
+    // index of the card currently at (or nearest to) the left edge
+    let current = 0;
+    list.forEach((c, i) => {
+      if (Math.abs(c.offsetLeft - list[0].offsetLeft - here) <
+          Math.abs(list[current].offsetLeft - list[0].offsetLeft - here)) current = i;
+    });
+    const target = list[Math.min(Math.max(current + dir, 0), list.length - 1)];
+    reviewsList.scrollTo({
+      left: target.offsetLeft - list[0].offsetLeft,
+      behavior: 'smooth'
+    });
+  };
+
+  reviewsPrev.addEventListener('click', () => scrollByCard(-1));
+  reviewsNext.addEventListener('click', () => scrollByCard(1));
+  reviewsList.addEventListener('scroll', updateArrows, { passive: true });
+  window.addEventListener('resize', updateArrows);
+  updateArrows();
+}
 
 
 // ── REVIEW FORM (EmailJS) ────────────────────────────────
