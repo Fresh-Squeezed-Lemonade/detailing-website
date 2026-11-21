@@ -90,7 +90,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // ── CONTACT FORM (EmailJS) ───────────────────────────────
-emailjs.init('b-wDLjf2ow3eMg5Um');
+// If the EmailJS library is blocked (ad blocker, bad connection), skip it so the rest of the
+// site — lightbox, reviews strip — still works. The forms show their error message instead.
+if (typeof emailjs !== 'undefined') emailjs.init('b-wDLjf2ow3eMg5Um');
 
 const contactForm    = document.getElementById('contactForm');
 const contactSubmit  = document.getElementById('contactSubmit');
@@ -173,6 +175,8 @@ lightbox.setAttribute('aria-modal', 'true');
 lightbox.setAttribute('aria-label', 'Image viewer');
 lightbox.innerHTML = `
   <button class="lightbox__close" aria-label="Close image">&times;</button>
+  <button class="lightbox__prev" aria-label="Previous image">&#8249;</button>
+  <button class="lightbox__next" aria-label="Next image">&#8250;</button>
   <div class="lightbox__inner">
     <img class="lightbox__img" src="" alt="" />
     <p class="lightbox__caption"></p>
@@ -183,14 +187,22 @@ document.body.appendChild(lightbox);
 const lightboxImg     = lightbox.querySelector('.lightbox__img');
 const lightboxCaption = lightbox.querySelector('.lightbox__caption');
 const lightboxClose   = lightbox.querySelector('.lightbox__close');
+const lightboxPrev    = lightbox.querySelector('.lightbox__prev');
+const lightboxNext    = lightbox.querySelector('.lightbox__next');
 
 // All focusable elements inside the lightbox (for focus trapping)
-const lightboxFocusable = [lightboxClose];
+const lightboxFocusable = [lightboxClose, lightboxPrev, lightboxNext];
 
 const galleryImages = Array.from(document.querySelectorAll('.before-after__panel img'));
 let currentIndex  = 0;
 let lastFocused   = null; // element that had focus before lightbox opened
 let transitionPending = false; // debounce rapid arrow presses
+
+const updateNavButtons = () => {
+  const show = galleryImages.length > 1;
+  lightboxPrev.style.display = show ? '' : 'none';
+  lightboxNext.style.display = show ? '' : 'none';
+};
 
 const openLightbox = index => {
   lastFocused  = document.activeElement;
@@ -203,6 +215,7 @@ const openLightbox = index => {
   // Use a class so this doesn't conflict with the nav scroll lock
   document.body.classList.add('lightbox-open');
   lightboxClose.focus();
+  updateNavButtons();
 };
 
 const closeLightbox = () => {
@@ -227,6 +240,7 @@ const showImage = index => {
     transitionPending = false;
   }, 150);
 
+  updateNavButtons();
 };
 
 // Make gallery images clickable
@@ -244,6 +258,8 @@ galleryImages.forEach((img, index) => {
 
 // Controls
 lightboxClose.addEventListener('click', closeLightbox);
+lightboxPrev.addEventListener('click', () => showImage(currentIndex - 1));
+lightboxNext.addEventListener('click', () => showImage(currentIndex + 1));
 
 // Click backdrop to close
 lightbox.addEventListener('click', e => {

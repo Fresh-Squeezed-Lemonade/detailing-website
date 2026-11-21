@@ -834,7 +834,7 @@ body {
 .booking__fallback a:hover { text-decoration: underline; }
 
 /* ── LIGHTBOX ────────────────────────────────────────────── */
-\#lightbox {
+#lightbox {
   display: none;
   position: fixed;
   inset: 0;
@@ -846,7 +846,7 @@ body {
   justify-content: center;
 }
 
-\#lightbox.active { display: flex; }
+#lightbox.active { display: flex; }
 
 .lightbox__inner {
   display: flex;
@@ -894,6 +894,30 @@ body {
   transition: background var(--transition);
 }
 .lightbox__close:hover { background: rgba(201,168,76,0.2); }
+
+.lightbox__prev,
+.lightbox__next {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.25);
+  color: var(--gold);
+  font-size: 1.75rem;
+  line-height: 1;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+.lightbox__prev { left: 1rem; }
+.lightbox__next { right: 1rem; }
+.lightbox__prev:hover,
+.lightbox__next:hover { background: rgba(201,168,76,0.2); }
 
 /* ── FOOTER ──────────────────────────────────────────────── */
 .footer {
